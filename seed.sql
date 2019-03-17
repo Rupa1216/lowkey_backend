@@ -46,10 +46,10 @@ INSERT INTO users (id, username, email, password, token, type, created) VALUES
 ('1', 'John123', 'john@email.com', '123', 'xyz', 'private', 'today'), ('2', 'Michelle123', 'michelle@email.com', '123', 'xyz', 'public', 'yesterday');
 
 INSERT INTO posts (id, author, created, attachments, content) VALUES
-(01, '2', 'today', 'none', 'hello world'), (002, '1', 'today', 'photo', 'skghskfhskh'), (003, '1', 'yesterday', 'video', 'asksdgff');
+('01', '2', 'today', 'none', 'hello world'), ('002', '1', 'today', 'photo', 'skghskfhskh'), ('003', '1', 'yesterday', 'video', 'asksdgff');
 
-INSERT INTO connections (id, follower_user_id, following_user_id) VALUES
-('001', '2', '1'), ('002', '1', '2');
+INSERT INTO connections (id, follower_user_id, following_user_id, status) VALUES
+('001', '2', '1', 'pending'), ('002', '1', '2', 'active');
 
 INSERT INTO likes (id, user_id, post_id, time) VALUES
 ('0001', '1', '002', 'today');
