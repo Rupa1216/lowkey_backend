@@ -4,42 +4,42 @@ CREATE DATABASE lowkey;
 \c lowkey;
 
 CREATE TABLE users (
-  id SERIAL PRIMARY KEY,
-  username VARCHAR NOT NULL,
-  email VARCHAR NOT NULL,
-  password VARCHAR NOT NULL,
-  token VARCHAR, 
-  type VARCHAR NOT NULL,
-  created TIMESTAMPTZ
+    id SERIAL PRIMARY KEY,
+    username VARCHAR NOT NULL,
+    email VARCHAR NOT NULL,
+    password VARCHAR NOT NULL,
+    token VARCHAR, 
+    acct_type VARCHAR NOT NULL,
+    created TIMESTAMPTZ
 );
 
 CREATE TABLE posts (
-  id SERIAL PRIMARY KEY,
-  author INT REFERENCES users(id) NOT NULL,
-  created TIMESTAMPTZ,
-  attachments VARCHAR NOT NULL,
-  content VARCHAR
+    id SERIAL PRIMARY KEY,
+    author INT REFERENCES users(id) NOT NULL,
+    created TIMESTAMPTZ,
+    attachments VARCHAR NOT NULL,
+    content VARCHAR
 );
 
 CREATE TABLE connections (
-  id SERIAL PRIMARY KEY,
-  follower_user_id INT REFERENCES users(id) NOT NULL,
-  following_user_id INT REFERENCES users(id) NOT NULL,
-  status VARCHAR NOT NULL
+    id SERIAL PRIMARY KEY,
+    follower_user_id INT REFERENCES users(id) NOT NULL,
+    following_user_id INT REFERENCES users(id) NOT NULL,
+    status VARCHAR NOT NULL
 );
 
 CREATE TABLE likes (
-  id SERIAL PRIMARY KEY,
-  user_id INT REFERENCES users(id) NOT NULL,
-  post_id INT REFERENCES posts(id) NOT NULL,
-  time TIMESTAMPTZ
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id) NOT NULL,
+    post_id INT REFERENCES posts(id) NOT NULL,
+    time TIMESTAMPTZ
 );
 
 CREATE TABLE comments (
-  id SERIAL PRIMARY KEY,
-  author_id INT REFERENCES users(id) NOT NULL,
-  post_id INT REFERENCES posts(id) NOT NULL,
-  time TIMESTAMPTZ
+    id SERIAL PRIMARY KEY,
+    author_id INT REFERENCES users(id) NOT NULL,
+    post_id INT REFERENCES posts(id) NOT NULL,
+    time TIMESTAMPTZ
 );
 
 INSERT INTO users (id, username, email, password, token, type, created) VALUES
