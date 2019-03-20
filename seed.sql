@@ -5,8 +5,8 @@ CREATE DATABASE lowkey;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    username VARCHAR NOT NULL,
-    email VARCHAR NOT NULL,
+    username VARCHAR UNIQUE NOT NULL,
+    email VARCHAR UNIQUE NOT NULL,
     password VARCHAR NOT NULL,
     token VARCHAR, 
     acct_type VARCHAR NOT NULL,
@@ -42,7 +42,7 @@ CREATE TABLE comments (
     time TIMESTAMPTZ
 );
 
-INSERT INTO users (id, username, email, password, token, type, created) VALUES
+INSERT INTO users (id, username, email, password, token, acct_type, created) VALUES
 ('1', 'John123', 'john@email.com', '123', 'xyz', 'private', 'today'), ('2', 'Michelle123', 'michelle@email.com', '123', 'xyz', 'public', 'yesterday');
 
 INSERT INTO posts (id, author, created, attachments, content) VALUES
