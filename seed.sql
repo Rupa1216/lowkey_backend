@@ -14,10 +14,13 @@ CREATE TABLE users (
 
 CREATE TABLE posts (
     id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES users(id) NOT NULL,
+    user_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),
     attachments VARCHAR NOT NULL,
-    content VARCHAR
+    content VARCHAR NOT NULL,
+        FOREIGN KEY (user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE attachments (
@@ -27,27 +30,45 @@ CREATE TABLE attachments (
         FOREIGN KEY (post_id)
         REFERENCES posts(id)
         ON DELETE CASCADE
-)
+);
 
 CREATE TABLE connections (
     id SERIAL PRIMARY KEY,
-    follower_user_id INT REFERENCES users(id) NOT NULL,
-    following_user_id INT REFERENCES users(id) NOT NULL,
-    status VARCHAR NOT NULL
+    follower_user_id INT NOT NULL,
+    following_user_id INT NOT NULL,
+    status VARCHAR NOT NULL,
+        FOREIGN KEY (follower_user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE,
+        FOREIGN KEY (following_user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE likes (
     id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES users(id) NOT NULL,
-    post_id INT REFERENCES posts(id) NOT NULL,
-    created_at TIMESTAMPTZ
+    user_id INT NOT NULL,
+    post_id INT NOT NULL,
+    created_at TIMESTAMPTZ,
+        FOREIGN KEY (user_id)
+        REFERENCES users(id) 
+        ON DELETE CASCADE,
+        FOREIGN KEY (post_id)
+        REFERENCES posts(id)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE comments (
     id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES users(id) NOT NULL,
-    post_id INT REFERENCES posts(id) NOT NULL,
-    created_at TIMESTAMPTZ
+    user_id INT NOT NULL,
+    post_id INT NOT NULL,
+    created_at TIMESTAMPTZ,
+        FOREIGN KEY (user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE,
+        FOREIGN KEY (post_id)
+        REFERENCES posts(id)
+        ON DELETE CASCADE
 );
 
 INSERT INTO users (username, email, token, is_private) VALUES
