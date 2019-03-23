@@ -14,5 +14,8 @@ app.use(bodyParser.json())
 // ROUTES
 app.use('/users', userRouter);
 
+app.use((err, req, res, next) => {
+    res.status(400).json({error: err.toString()});
+});
 
 module.exports = { app, }
