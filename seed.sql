@@ -8,7 +8,7 @@ CREATE TABLE users (
     username VARCHAR UNIQUE NOT NULL,
     email VARCHAR UNIQUE NOT NULL,
     token VARCHAR, 
-    acct_type VARCHAR NOT NULL,
+    is_private BOOLEAN DEFAULT true,
     created_at INT DEFAULT CAST(EXTRACT(epoch FROM NOW()) AS INT) 
 );
 
@@ -19,6 +19,15 @@ CREATE TABLE posts (
     attachments VARCHAR NOT NULL,
     content VARCHAR
 );
+
+CREATE TABLE attachments (
+    id SERIAL PRIMARY KEY,
+    post_id INT NOT NULL,
+    url VARCHAR NOT NULL,
+        FOREIGN KEY (post_id)
+        REFERENCES posts(id)
+        ON DELETE CASCADE
+)
 
 CREATE TABLE connections (
     id SERIAL PRIMARY KEY,
@@ -41,9 +50,9 @@ CREATE TABLE comments (
     created_at TIMESTAMPTZ
 );
 
-INSERT INTO users (username, email, token, acct_type) VALUES
-('John123', 'john@email.com', 'xyz', 'private'), 
-('Michelle123', 'michelle@email.com', 'xyz', 'public');
+INSERT INTO users (username, email, token, is_private) VALUES
+('John123', 'john@email.com', 'xyz', 'true'), 
+('Michelle123', 'michelle@email.com', 'xyz', 'false');
 
 INSERT INTO posts (user_id, created_at, attachments, content) VALUES
 ('2', 'today', 'none', 'hello world'), 
