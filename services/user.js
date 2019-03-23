@@ -1,19 +1,19 @@
 const { db } = require('./dbConnect');
 const UserService = {};
 
-UserService.create = (username, email, token = null, acct_type) => {
+UserService.create = (username, email, token = null) => {
 const sql = `
-    INSERT INTO users (username, email, token, acct_type) 
-    VALUES ($[username], $[email], $[token], $[acct_type]) 
+    INSERT INTO users (username, email, token) 
+    VALUES ($[username], $[email], $[token]) 
     RETURNING id;
     `;
-    return db.one(sql, { username, email, token, acct_type })
+    return db.one(sql, { username, email, token })
 }
 
 UserService.read = (username) => {
     const sql = `
     SELECT 
-    u.username, u.email, u.acct_type, u.created_at
+    u.username, u.email, u.is_private, u.created_at
     FROM users u
     WHERE
     u.username = $[username]
@@ -21,15 +21,15 @@ UserService.read = (username) => {
     return db.one(sql, {username});
 }
 
-UserService.update = (username, email, token, acct_type) => {
+UserService.update = (username, email, token, is_private) => {
     const sql = `
     UPDATE users
     SET
-    username=$[username], email=$[email], token=$[token], acct_type=$[acct_type]
+    username=$[username], email=$[email], token=$[token], is_private=$[is_private]
     WHERE
     id=$[id]
     `; // should it be id or username in above line?
-    return db.one(sql, {username, email, token, acct_type})
+    return db.one(sql, {username, email, token, is_private})
 }
 
 UserService.delete = (username) => {
@@ -40,13 +40,13 @@ UserService.delete = (username) => {
     return db.none(sql, {username});
 }
 
-UserService.allPublicUsers = (acct_type) => { // what parameter should I pass here?
+UserService.allPublicUsers = (is_private) => { // what parameter should I pass here?
     const sql = `
     SELECT
-    u.username, u.created_at
+    *
     FROM users u
     WHERE
-    u.$[acct_type] = 'public'
+    u.$[is_private] = false
     `;
 }
 
