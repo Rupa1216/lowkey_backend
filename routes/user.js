@@ -15,4 +15,17 @@ userRouter.post('/', (req, res, next) => {
     })
 });
 
+// GET - READ 
+userRouter.get('/:username/', (req, res, next) => {
+    const {username} = req.params;
+  
+    UserService.read(username)
+      .then(data => {
+        res.json(data);
+      })
+      .catch(err => {
+        next(err);
+      })
+  });
+
 module.exports = userRouter;
