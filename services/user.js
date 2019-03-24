@@ -21,15 +21,15 @@ UserService.read = (username) => {
     return db.one(sql, {username});
 }
 
-UserService.update = (username, email, token, is_private) => {
+UserService.update = (username, email) => {
     const sql = `
     UPDATE users
     SET
-    username=$[username], email=$[email], token=$[token], is_private=$[is_private]
+    username=$[username], email=$[email]
     WHERE
-    id=$[id]
-    `; // should it be id or username in above line?
-    return db.one(sql, {username, email, token, is_private})
+    username=$[username]
+    `;
+    return db.none(sql, {username, email})
 }
 
 UserService.delete = (username) => {
