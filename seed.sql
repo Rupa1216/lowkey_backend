@@ -16,7 +16,6 @@ CREATE TABLE posts (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),
-    attachments VARCHAR NOT NULL,
     content VARCHAR NOT NULL,
         FOREIGN KEY (user_id)
         REFERENCES users(id)
@@ -26,9 +25,13 @@ CREATE TABLE posts (
 CREATE TABLE attachments (
     id SERIAL PRIMARY KEY,
     post_id INT NOT NULL,
-    url VARCHAR NOT NULL,
+    user_id INT NOT NULL,
+    image_url VARCHAR,
         FOREIGN KEY (post_id)
         REFERENCES posts(id)
+        ON DELETE CASCADE,
+        FOREIGN KEY (user_id)
+        REFERENCES users(id)
         ON DELETE CASCADE
 );
 
@@ -75,10 +78,14 @@ INSERT INTO users (username, email, token, is_private) VALUES
 ('John123', 'john@email.com', 'xyz', 'true'), 
 ('Michelle123', 'michelle@email.com', 'xyz', 'false');
 
-INSERT INTO posts (user_id, created_at, attachments, content) VALUES
-('2', 'today', 'none', 'hello world'), 
-('1', 'today', 'photo', 'skghskfhskh'), 
-('1', 'yesterday', 'video', 'asksdgff');
+INSERT INTO posts (user_id, created_at, content) VALUES
+('2', 'today', 'hello world'), 
+('1', 'today', 'skghskfhskh'), 
+('1', 'yesterday', 'asksdgff');
+
+INSERT INTO attachments (post_id, user_id, image_url) VALUES
+('1', '2', 'www.google.com'),
+('3', '1', 'www.google.com');
 
 INSERT INTO connections (follower_user_id, following_user_id, status) VALUES
 ('2', '1', 'pending'), 
