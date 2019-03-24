@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 
 const userRouter = require('./routes/user');
+const postRouter = require('./routes/post');
 
 
 // MIDDLEWARE NEEDED
@@ -13,6 +14,7 @@ app.use(bodyParser.json())
 
 // ROUTES
 app.use('/users', userRouter);
+app.use('/posts', postRouter);
 
 app.use((err, req, res, next) => {
     res.status(400).json({error: err.toString()});
