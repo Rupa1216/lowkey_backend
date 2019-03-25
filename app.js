@@ -4,6 +4,7 @@ const app = express();
 
 const userRouter = require('./routes/user');
 const postRouter = require('./routes/post');
+const attachmentRouter = require('./routes/attachment');
 
 
 // MIDDLEWARE NEEDED
@@ -15,6 +16,8 @@ app.use(bodyParser.json())
 // ROUTES
 app.use('/users', userRouter);
 app.use('/posts', postRouter);
+app.use('/attachments', attachmentRouter);
+
 
 app.use((err, req, res, next) => {
     res.status(400).json({error: err.toString()});
