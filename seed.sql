@@ -37,13 +37,13 @@ CREATE TABLE attachments (
 
 CREATE TABLE connections (
     id SERIAL PRIMARY KEY,
-    follower_user_id INT NOT NULL,
-    following_user_id INT NOT NULL,
+    follower_id INT NOT NULL,
+    following_id INT NOT NULL,
     status VARCHAR NOT NULL,
-        FOREIGN KEY (follower_user_id)
+        FOREIGN KEY (follower_id)
         REFERENCES users(id)
         ON DELETE CASCADE,
-        FOREIGN KEY (following_user_id)
+        FOREIGN KEY (following_id)
         REFERENCES users(id)
         ON DELETE CASCADE
 );
@@ -87,7 +87,7 @@ INSERT INTO attachments (post_id, user_id, image_url) VALUES
 ('1', '2', 'www.google.com'),
 ('3', '1', 'www.google.com');
 
-INSERT INTO connections (follower_user_id, following_user_id, status) VALUES
+INSERT INTO connections (follower_id, following_id, status) VALUES
 ('2', '1', 'pending'), 
 ('1', '2', 'active');
 
