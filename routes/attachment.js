@@ -15,5 +15,31 @@ attachmentRouter.post('/', (req, res, next) => {
     })
 });
 
+// GET - READ
+attachmentRouter.get('/:id/', (req, res, next) => {
+    const {id} = req.params;
+
+    AttachmentService.read(id)
+    .then(data => {
+        res.json(data);
+    })
+    .catch(err => {
+        next(err);
+    })
+});
+
+// DELETE - DELETE
+attachmentRouter.delete('/:id', (req, res, next) => {
+    const {id} = req.params;
+    
+    AttachmentService.delete(id)
+        .then(data => {
+        res.json({success: `Deleted attachment number ${id}`});
+        })
+        .catch(err => {
+        next(err);
+        })
+    });
+
 module.exports = attachmentRouter;
 
