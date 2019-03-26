@@ -24,7 +24,7 @@ PostService.read = (id) => {
     return db.one(sql, {id});
 }
 
-PostService.update = (content, id) => {
+PostService.update = (id, content) => {
     const sql = `
     UPDATE posts
     SET
@@ -32,7 +32,7 @@ PostService.update = (content, id) => {
     WHERE
     id=$[id]
     `;
-    return db.none(sql, {content, id})
+    return db.none(sql, {id, content})
 }
 
 PostService.delete = (id) => {
