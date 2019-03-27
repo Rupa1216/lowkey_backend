@@ -1,13 +1,13 @@
 const { db } = require('./dbConnect');
 const PostService = {};
 
-PostService.create = (user_id, created_at, content) => {
+PostService.create = (user_id, content) => {
     const sql = `
-        INSERT INTO posts (user_id, created_at, content) 
-        VALUES ($[user_id], $[created_at], $[content]) 
+        INSERT INTO posts (user_id, content) 
+        VALUES ($[user_id], $[content]) 
         RETURNING id;
         `;
-        return db.one(sql, { user_id, created_at, content })
+        return db.one(sql, { user_id, content })
     }
 
 PostService.read = (id) => {
