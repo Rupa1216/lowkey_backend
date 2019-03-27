@@ -7,15 +7,14 @@ CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR UNIQUE NOT NULL,
     email VARCHAR UNIQUE NOT NULL,
-    token VARCHAR, 
     is_private BOOLEAN DEFAULT true,
-    created_at INT DEFAULT CAST(EXTRACT(epoch FROM NOW()) AS INT) 
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
 );
 
 CREATE TABLE posts (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW(),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     content VARCHAR NOT NULL,
         FOREIGN KEY (user_id)
         REFERENCES users(id)
@@ -48,11 +47,13 @@ CREATE TABLE connections (
         ON DELETE CASCADE
 );
 
+CREATE UNIQUE INDEX connection ON connections (follower_id, following_id);
+
 CREATE TABLE likes (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     post_id INT NOT NULL,
-    created_at TIMESTAMPTZ,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id)
         REFERENCES users(id) 
         ON DELETE CASCADE,
@@ -61,11 +62,13 @@ CREATE TABLE likes (
         ON DELETE CASCADE
 );
 
+CREATE UNIQUE INDEX like ON likes (user_id, post_id);
+
 CREATE TABLE comments (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     post_id INT NOT NULL,
-    created_at TIMESTAMPTZ,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (user_id)
         REFERENCES users(id)
         ON DELETE CASCADE,
@@ -78,10 +81,10 @@ INSERT INTO users (username, email, token, is_private) VALUES
 ('John123', 'john@email.com', 'xyz', 'true'), 
 ('Michelle123', 'michelle@email.com', 'xyz', 'false');
 
-INSERT INTO posts (user_id, created_at, content) VALUES
-('2', 'today', 'hello world'), 
-('1', 'today', 'skghskfhskh'), 
-('1', 'yesterday', 'asksdgff');
+INSERT INTO posts (user_id, content) VALUES
+('2', 'hello world'), 
+('1', 'skghskfhskh'), 
+('1', 'asksdgff');
 
 INSERT INTO attachments (post_id, user_id, image_url) VALUES
 ('1', '2', 'www.google.com'),
@@ -91,10 +94,10 @@ INSERT INTO connections (follower_id, following_id, status) VALUES
 ('2', '1', 'pending'), 
 ('1', '2', 'active');
 
-INSERT INTO likes (user_id, post_id, created_at) VALUES
-('1', '002', 'today');
+INSERT INTO likes (user_id, post_id) VALUES
+('1', '002');
 
-INSERT INTO comments (user_id, post_id, created_at) VALUES
-('2', '01', 'today');
+INSERT INTO comments (user_id, post_id) VALUES
+('2', '01');
 
 
