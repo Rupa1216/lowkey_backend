@@ -10,34 +10,34 @@ const sql = `
     return db.one(sql, { username, email })
 }
 
-UserService.read = (username) => {
+UserService.read = (id) => {
     const sql = `
     SELECT 
     u.username, u.email, u.is_private, u.created_at
     FROM users u
     WHERE
-    u.username = $[username]
+    u.id = $[id]
     `;
-    return db.one(sql, {username});
+    return db.one(sql, {id});
 }
 
-UserService.update = (username, email) => {
+UserService.update = (id, username, email) => {
     const sql = `
     UPDATE users
     SET
     username=$[username], email=$[email]
     WHERE
-    username=$[username]
+    id=$[id]
     `;
-    return db.none(sql, {username, email})
+    return db.none(sql, {id, username, email})
 }
 
-UserService.delete = (username) => {
+UserService.delete = (id) => {
     const sql = `
     DELETE FROM users u 
-    WHERE u.username=$[username]
+    WHERE u.id=$[id]
     `
-    return db.none(sql, {username});
+    return db.none(sql, {id});
 }
 
 UserService.allPublicUsers = (is_private) => { // what parameter should I pass here?
