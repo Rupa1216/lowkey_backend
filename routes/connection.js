@@ -15,6 +15,17 @@ connectionRouter.post('/', (req, res, next) => {
     })
 });
 
+// GET - READ
+connectionRouter.get('/:id/', (req, res, next) => {
+    const {id} = req.params;
 
+    ConnectionService.read(id)
+    .then(data => {
+        res.json(data);
+    })
+    .catch(err => {
+        next(err);
+    })
+});
 
 module.exports = connectionRouter;
