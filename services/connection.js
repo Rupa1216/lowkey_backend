@@ -40,7 +40,7 @@ ConnectionService.delete = (id) => {
     DELETE FROM connections c
     WHERE c.id=$[id]
     `
-    return db.none(sql, { follower_id, following_id, status });
+    return db.none(sql, { id });
 }
 
 module.exports = ConnectionService;
