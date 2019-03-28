@@ -4,9 +4,9 @@ const PostService = require('../services/post');
 
 // POST - CREATE 
 postRouter.post('/', (req, res, next) => {
-    const {user_id, created_at, content} = req.body;
+    const {user_id, content} = req.body;
 
-    PostService.create(user_id, created_at, content)
+    PostService.create(user_id, content)
     .then(data => {
         res.json({success: `Created post for user ${user_id} with generated id: ${data.id}`});
     })
