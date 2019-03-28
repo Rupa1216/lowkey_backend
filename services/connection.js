@@ -10,25 +10,25 @@ ConnectionService.create = (follower_id, following_id, status) => {
         return db.one(sql, { follower_id, following_id, status })
     }
 
-ConnectionService.read = (id) => {
+ConnectionService.read = (id) => { // make followers and following into 2 separate tables?
     const sql = `
     SELECT 
     c.follower_id, c.following_id, c.status,
     u.username
     FROM connections c
     LEFT JOIN users u
-    ON c.follower_id = u.id AND c.following_id = u.id
+    ON c.follower_id = u.id 
     WHERE
     c.id = $[id]
-    `;
-    return db.one(sql, { follower_id, following_id, status });
+    `; // remove LEFT JOIN? 
+    return db.one(sql, { id });
 }
 
 ConnectionService.update = (id, status) => {
     const sql = `
     UPDATE connections
     SET
-    $[status] = 'active'
+    status = 'active'
     WHERE
     id = $[id]
     `;
