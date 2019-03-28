@@ -28,4 +28,20 @@ connectionRouter.get('/:id/', (req, res, next) => {
     })
 });
 
+// PUT - UPDATE
+connectionRouter.put('/:id', (req, res, next) => {
+    const { id } = req.params;
+    const { status } = req.body;
+
+ConnectionService.update(id, status)
+    .then(data => {
+        console.log('working?')
+    res.json({success: `Updated connection #${id} to status: ${status}`});
+    })
+    .catch(err => {
+        console.log('failing?')
+    next(err);
+    })
+});
+
 module.exports = connectionRouter;
