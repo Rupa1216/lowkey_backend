@@ -8,7 +8,10 @@ CREATE TABLE users (
     username VARCHAR UNIQUE NOT NULL,
     email VARCHAR UNIQUE NOT NULL,
     is_private BOOLEAN DEFAULT true,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP 
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+    avatar_url VARCHAR,
+    wallpaper_url VARCHAR,
+    banner_url VARCHAR
 );
 
 CREATE TABLE posts (
@@ -25,7 +28,7 @@ CREATE TABLE attachments (
     id SERIAL PRIMARY KEY,
     post_id INT NOT NULL,
     user_id INT NOT NULL,
-    image_url VARCHAR,
+    urls VARCHAR,
         FOREIGN KEY (post_id)
         REFERENCES posts(id)
         ON DELETE CASCADE,
@@ -86,7 +89,7 @@ INSERT INTO posts (user_id, content) VALUES
 ('1', 'skghskfhskh'), 
 ('1', 'asksdgff');
 
-INSERT INTO attachments (post_id, user_id, image_url) VALUES
+INSERT INTO attachments (post_id, user_id, urls) VALUES
 ('1', '2', 'www.google.com'),
 ('3', '1', 'www.google.com');
 
