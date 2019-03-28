@@ -29,12 +29,11 @@ userRouter.get('/:username/', (req, res, next) => {
 });
 
 // PUT - UPDATE EMAIL
-userRouter.put('/:username', (req, res, next) => {
-    const { username } = req.params;
-    const { email} = req.body;
-// would token be updated through here?
+userRouter.put('/:id', (req, res, next) => {
+    const { id } = req.params;
+    const { username, email} = req.body;
 
-UserService.update(username, email)
+UserService.update(id, username, email)
     .then(data => {
     res.json({success: `Updated user named ${username} with email: ${email}`});
     })
@@ -44,12 +43,12 @@ UserService.update(username, email)
 });
 
 // DELETE - DELETE
-userRouter.delete('/:username', (req, res, next) => {
-const {username} = req.params;
+userRouter.delete('/:id', (req, res, next) => {
+const { id } = req.params;
 
-UserService.delete(username)
+UserService.delete(id)
     .then(data => {
-    res.json({success: `Deleted user named ${username}`});
+    res.json({success: `Deleted user id ${id}`});
     })
     .catch(err => {
     next(err);
