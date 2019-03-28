@@ -62,7 +62,7 @@ CREATE TABLE likes (
         ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX like ON likes (user_id, post_id);
+CREATE UNIQUE INDEX a_like ON likes (user_id, post_id);
 
 CREATE TABLE comments (
     id SERIAL PRIMARY KEY,
@@ -77,9 +77,9 @@ CREATE TABLE comments (
         ON DELETE CASCADE
 );
 
-INSERT INTO users (username, email, token, is_private) VALUES
-('John123', 'john@email.com', 'xyz', 'true'), 
-('Michelle123', 'michelle@email.com', 'xyz', 'false');
+INSERT INTO users (username, email, is_private) VALUES
+('John123', 'john@email.com', 'true'), 
+('Michelle123', 'michelle@email.com', 'false');
 
 INSERT INTO posts (user_id, content) VALUES
 ('2', 'hello world'), 
