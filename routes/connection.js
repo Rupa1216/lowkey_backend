@@ -44,4 +44,17 @@ ConnectionService.update(id, status)
     })
 });
 
+// DELETE - DELETE
+connectionRouter.delete('/:id', (req, res, next) => {
+    const {id} = req.params;
+    
+    ConnectionService.delete(id)
+        .then(data => {
+        res.json({success: `Deleted connection #${id}`});
+        })
+        .catch(err => {
+        next(err);
+        })
+    });
+
 module.exports = connectionRouter;
