@@ -6,6 +6,3 @@ package-lock.json
 
 coverage/*
 # coveralls.yml
-
-#Configure during next iteration:
-./services/registrationUtils.js
