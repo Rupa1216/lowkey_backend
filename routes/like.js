@@ -15,4 +15,17 @@ likeRouter.post('/', (req, res, next) => {
     })
 });
 
+// DELETE - DELETE
+likeRouter.delete('/:id', (req, res, next) => {
+    const {id} = req.params;
+    
+    LikeService.delete(id)
+        .then(data => {
+        res.json({success: `Deleted like #${id}`});
+        })
+        .catch(err => {
+        next(err);
+        })
+    });
+
 module.exports = likeRouter;
