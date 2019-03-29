@@ -16,10 +16,10 @@ userRouter.post('/', (req, res, next) => {
 });
 
 // GET - READ 
-userRouter.get('/:username/', (req, res, next) => {
-    const {username} = req.params;
+userRouter.get('/:id/', (req, res, next) => {
+    const {id} = req.params;
 
-    UserService.read(username)
+    UserService.read(id)
     .then(data => {
         res.json(data);
     })
