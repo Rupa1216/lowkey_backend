@@ -1,9 +1,7 @@
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS posts;
-DROP TABLE IF EXISTS attachments;
-DROP TABLE IF EXISTS connections;
-DROP TABLE IF EXISTS likes;
-DROP TABLE IF EXISTS comments;
+DROP DATABASE IF EXISTS lowkey;
+CREATE DATABASE lowkey;
+
+\c lowkey;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
@@ -81,3 +79,28 @@ CREATE TABLE comments (
         REFERENCES posts(id)
         ON DELETE CASCADE
 );
+
+INSERT INTO users (username, email, is_private) VALUES
+('John123', 'john@email.com', 'true'), 
+('Michelle123', 'michelle@email.com', 'false');
+
+INSERT INTO posts (user_id, content) VALUES
+('2', 'hello world'), 
+('1', 'skghskfhskh'), 
+('1', 'asksdgff');
+
+INSERT INTO attachments (post_id, user_id, urls) VALUES
+('1', '2', 'www.google.com'),
+('3', '1', 'www.google.com');
+
+INSERT INTO connections (follower_id, following_id, status) VALUES
+('2', '1', 'pending'), 
+('1', '2', 'active');
+
+INSERT INTO likes (user_id, post_id) VALUES
+('1', '2');
+
+INSERT INTO comments (user_id, post_id) VALUES
+('2', '1');
+
+
