@@ -10,4 +10,12 @@ LikeService.create = (user_id, post_id) => {
         return db.one(sql, { user_id, post_id })
     }
 
+LikeService.delete = (id) => {
+    const sql = `
+    DELETE FROM likes l
+    WHERE l.id=$[id]
+    `
+    return db.none(sql, { id });
+}
+
 module.exports = LikeService;
