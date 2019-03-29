@@ -6,6 +6,7 @@ const userRouter = require('./routes/user');
 const postRouter = require('./routes/post');
 const attachmentRouter = require('./routes/attachment');
 const connectionRouter = require('./routes/connection');
+const likeRouter = require('./routes/like');
 
 
 // MIDDLEWARE NEEDED
@@ -19,7 +20,7 @@ app.use('/users', userRouter);
 app.use('/posts', postRouter);
 app.use('/attachments', attachmentRouter);
 app.use('/connections', connectionRouter);
-
+app.use('/likes', likeRouter);
 
 
 app.use((err, req, res, next) => {
