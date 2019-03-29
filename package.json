@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start:local": "$(npm bin)/nodemon index.js &",
+    "start": "node index.js",
     "test": "$(npm bin)/jest"
   },
   "repository": {
