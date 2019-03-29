@@ -27,4 +27,8 @@ app.use((err, req, res, next) => {
     res.status(400).json({error: err.toString()});
 });
 
+app.get('/', (req, res) => {
+    res.json({'test': true})
+})
+
 module.exports = { app, }
