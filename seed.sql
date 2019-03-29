@@ -50,7 +50,7 @@ CREATE TABLE connections (
         ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX connection ON connections (follower_id, following_id);
+CREATE UNIQUE INDEX connection ON connections (follower_id, following_id, status);
 
 CREATE TABLE likes (
     id SERIAL PRIMARY KEY,
@@ -98,9 +98,9 @@ INSERT INTO connections (follower_id, following_id, status) VALUES
 ('1', '2', 'active');
 
 INSERT INTO likes (user_id, post_id) VALUES
-('1', '002');
+('1', '2');
 
 INSERT INTO comments (user_id, post_id) VALUES
-('2', '01');
+('2', '1');
 
 
