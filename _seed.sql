@@ -50,7 +50,7 @@ CREATE TABLE connections (
         ON DELETE CASCADE
 );
 
-CREATE UNIQUE INDEX connection ON connections (follower_id, following_id, status);
+CREATE UNIQUE INDEX connection ON connections (follower_id, following_id);
 
 CREATE TABLE likes (
     id SERIAL PRIMARY KEY,

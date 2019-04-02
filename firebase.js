@@ -1,4 +1,5 @@
 var admin = require("firebase-admin");
+
 var serviceAccount;
 
 if(process.env.FIREBASE_KEY) {
