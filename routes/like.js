@@ -1,8 +1,8 @@
 const express = require('express');
 const likeRouter = express.Router();
-const LikeService = require('../services/connection');
+const LikeService = require('../services/like');
 
-// POST - CREATE 
+// POST - CREATE
 likeRouter.post('/', (req, res, next) => {
     const { user_id, post_id } = req.body;
 
