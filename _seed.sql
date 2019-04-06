@@ -5,10 +5,13 @@ CREATE DATABASE lowkey;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    username VARCHAR UNIQUE NOT NULL,
+    username VARCHAR(20) UNIQUE NOT NULL,
     email VARCHAR UNIQUE NOT NULL,
+    fbase_uid VARCHAR UNIQUE NOT NULL,
     is_private BOOLEAN DEFAULT true,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+    display_name VARCHAR(20),
+    bio VARCHAR(100),
     avatar_url VARCHAR,
     wallpaper_url VARCHAR,
     banner_url VARCHAR
@@ -80,9 +83,9 @@ CREATE TABLE comments (
         ON DELETE CASCADE
 );
 
-INSERT INTO users (username, email, is_private) VALUES
-('John123', 'john@email.com', 'true'), 
-('Michelle123', 'michelle@email.com', 'false');
+INSERT INTO users (username, email, fbase_uid, is_private) VALUES
+('John123', 'john@email.com', 'xyc', 'true'), 
+('Michelle123', 'michelle@email.com', 'yyx', 'false');
 
 INSERT INTO posts (user_id, content) VALUES
 ('2', 'hello world'), 
