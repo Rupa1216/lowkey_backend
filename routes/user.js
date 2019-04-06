@@ -2,57 +2,82 @@ const express = require('express');
 const userRouter = express.Router();
 const UserService = require('../services/user');
 
+
 // POST - CREATE 
 userRouter.post('/', (req, res, next) => {
-    const {username, email} = req.body;
+    const { fbase_uid, username, email } = req.body;
 
-    UserService.create(username, email)
-    .then(data => {
-        res.json({success: `Created user named ${username} with generated ID: ${data.id}`});
-    })
-    .catch(err => {
-        next(err);
-    })
+    UserService.create(fbase_uid, username, email)
+        .then(data => {
+            res.json({ success: `Created user named ${username} with generated ID: ${data.id}` });
+        })
+        .catch(err => {
+            next(err);
+        })
 });
 
 // GET - READ 
-userRouter.get('/:id/', (req, res, next) => {
-    const {id} = req.params;
+userRouter.get('/id/:fbase_uid/', (req, res, next) => {
+    const { fbase_uid } = req.params;
 
-    UserService.read(id)
-    .then(data => {
-        res.json(data);
-    })
-    .catch(err => {
-        next(err);
-    })
+    UserService.readId(fbase_uid)
+        .then(data => {
+            res.json(data);
+        })
+        .catch(err => {
+            next(err);
+        })
+});
+
+// GET - READ 
+userRouter.get('/:username/', (req, res, next) => {
+    const { username } = req.params;
+
+    UserService.read(username)
+        .then(data => {
+            res.json(data);
+        })
+        .catch(err => {
+            next(err);
+        })
 });
 
 // PUT - UPDATE EMAIL
-userRouter.put('/:id', (req, res, next) => {
-    const { id } = req.params;
-    const { username, email} = req.body;
-
-UserService.update(id, username, email)
-    .then(data => {
-    res.json({success: `Updated user named ${username} with email: ${email}`});
-    })
-    .catch(err => {
-    next(err);
-    })
+userRouter.put('/:fbase_uid/', (req, res, next) => {
+    const { fbase_uid } = req.params;
+    let { username, bio, display_name, email } = req.body;
+    UserService.update(username, bio = '', display_name = '', email)
+        .then(data => {
+            res.json({ success: `Updated user ${username} with email: ${email}` });
+        })
+        .catch(err => {
+            next(err);
+        })
 });
 
 // DELETE - DELETE
-userRouter.delete('/:id', (req, res, next) => {
-const { id } = req.params;
+userRouter.delete('/:fbase_uid/', (req, res, next) => {
+    const { fbase_uid } = req.params;
 
-UserService.delete(id)
-    .then(data => {
-    res.json({success: `Deleted user id ${id}`});
-    })
-    .catch(err => {
-    next(err);
-    })
+    UserService.delete(fbase_uid)
+        .then(data => {
+            res.json({ success: `Deleted user id ${fbase_uid}` });
+        })
+        .catch(err => {
+            next(err);
+        })
+});
+
+// GET - READ 
+userRouter.get('/public/', (req, res, next) => {
+
+    UserService.allPublicUsers()
+        .then(data => {
+            res.json(data);
+        })
+        .catch(err => {
+            next(err);
+        })
 });
 
 module.exports = userRouter;
