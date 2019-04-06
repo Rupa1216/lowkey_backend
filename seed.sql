@@ -13,7 +13,7 @@ CREATE TABLE users (
     is_private BOOLEAN DEFAULT true,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
     display_name VARCHAR(20),
-    bio VARCHAR(50),
+    bio VARCHAR(100),
     avatar_url VARCHAR,
     wallpaper_url VARCHAR,
     banner_url VARCHAR
