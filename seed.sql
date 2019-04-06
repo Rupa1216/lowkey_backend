@@ -1,16 +1,19 @@
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS posts;
-DROP TABLE IF EXISTS attachments;
-DROP TABLE IF EXISTS connections;
-DROP TABLE IF EXISTS likes;
-DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS posts CASCADE;
+DROP TABLE IF EXISTS attachments CASCADE;
+DROP TABLE IF EXISTS connections CASCADE;
+DROP TABLE IF EXISTS likes CASCADE;
+DROP TABLE IF EXISTS comments CASCADE;
 
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    username VARCHAR UNIQUE NOT NULL,
+    username VARCHAR(20) UNIQUE NOT NULL,
     email VARCHAR UNIQUE NOT NULL,
+    fbase_uid VARCHAR UNIQUE NOT NULL,
     is_private BOOLEAN DEFAULT true,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+    display_name VARCHAR(20),
+    bio VARCHAR(100),
     avatar_url VARCHAR,
     wallpaper_url VARCHAR,
     banner_url VARCHAR
@@ -81,3 +84,4 @@ CREATE TABLE comments (
         REFERENCES posts(id)
         ON DELETE CASCADE
 );
+

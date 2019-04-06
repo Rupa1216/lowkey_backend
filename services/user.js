@@ -1,53 +1,65 @@
 const { db } = require('./dbConnect');
 const UserService = {};
 
-UserService.create = (username, email) => {
+UserService.create = (fbase_uid, username, email) => {
 const sql = `
-    INSERT INTO users (username, email) 
-    VALUES ($[username], $[email]) 
+    INSERT INTO users (fbase_uid, username, email) 
+    VALUES ($[fbase_uid], $[username], $[email]) 
     RETURNING id;
     `;
-    return db.one(sql, { username, email })
+    return db.one(sql, { fbase_uid, username, email })
 }
 
-UserService.read = (id) => {
+UserService.readId = (fbase_uid) => {
     const sql = `
     SELECT 
     u.username, u.email, u.is_private, u.created_at
     FROM users u
     WHERE
-    u.id = $[id]
+    u.fbase_uid = $[fbase_uid]
     `;
-    return db.one(sql, {id});
+    return db.one(sql, {fbase_uid});
 }
 
-UserService.update = (id, username, email) => {
+UserService.read = (username) => {
+    const sql = `
+    SELECT 
+    u.fbase_uid, u.is_private, u.created_at
+    FROM users u
+    WHERE
+    u.username = $[username]
+    `;
+    return db.one(sql, {username});
+}
+
+UserService.update = (fbase_uid, username, bio, display_name, email) => {
     const sql = `
     UPDATE users
     SET
-    username=$[username], email=$[email]
+    username=$[username], bio=$[bio], display_name=$[display_name], email=$[email]
     WHERE
-    id=$[id]
+    fbase_uid=$[fbase_uid]
     `;
-    return db.none(sql, {id, username, email})
+    return db.none(sql, {fbase_uid, username, bio, display_name, email})
 }
 
-UserService.delete = (id) => {
+UserService.delete = (fbase_uid) => {
     const sql = `
     DELETE FROM users u 
-    WHERE u.id=$[id]
+    WHERE u.fbase_uid=$[fbase_uid]
     `
-    return db.none(sql, {id});
+    return db.none(sql, {fbase_uid});
 }
 
-UserService.allPublicUsers = (is_private) => { // what parameter should I pass here?
+UserService.allPublicUsers = () => { 
     const sql = `
     SELECT
     *
     FROM users u
     WHERE
-    u.$[is_private] = false
-    `;
+    u.is_private = false
+    `
+    return db.any(sql);
 }
 
 module.exports = UserService;

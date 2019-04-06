@@ -47,13 +47,4 @@ app.get('/', (req, res) => {
     res.json({'test': true})
 })
 
-app.post('/unprotected', (req, res) => {
-    const { email, id } = req.body;
-    res.json(`Welcome! You are user ${email} with ${id}`);
-  })
-  
-  app.post('/protected', checkFirebaseToken, (req, res) => {
-    res.json(`This is some sensitive data`);
-  })
-
-module.exports = { app, }
+module.exports = { app, checkFirebaseToken }
