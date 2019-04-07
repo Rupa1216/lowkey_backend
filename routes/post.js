@@ -28,6 +28,19 @@ postRouter.get('/:id/', (req, res, next) => {
     })
 });
 
+// GET - READ ALL POSTS FROM USER
+postRouter.get('/:id/all', (req, res, next) => {
+    const {id} = req.params;
+
+    PostService.readAll(id)
+    .then(data => {
+        res.json(data);
+    })
+    .catch(err => {
+        next(err);
+    })
+});
+
 // PUT - UPDATE
 postRouter.put('/:id', (req, res, next) => {
     const { id } = req.params;
