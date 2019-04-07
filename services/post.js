@@ -24,6 +24,20 @@ PostService.read = (id) => {
     return db.one(sql, {id});
 }
 
+PostService.readAll = (id) => {
+    const sql = `
+    SELECT 
+    p.created_at, p.content,
+    u.username
+    FROM posts p
+    LEFT JOIN users u
+    ON p.user_id = u.id
+    WHERE
+    u.id = $[id]
+    `;
+    return db.any(sql, {id});
+}
+
 PostService.update = (id, content) => {
     const sql = `
     UPDATE posts
