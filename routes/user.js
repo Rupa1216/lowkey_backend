@@ -16,7 +16,7 @@ userRouter.post('/', (req, res, next) => {
         })
 });
 
-// GET - READ 
+// GET - READ BY FBASE_ID
 userRouter.get('/id/:fbase_uid/', (req, res, next) => {
     const { fbase_uid } = req.params;
 
@@ -29,11 +29,23 @@ userRouter.get('/id/:fbase_uid/', (req, res, next) => {
         })
 });
 
-// GET - READ 
+// GET - READ BY USERNAME
 userRouter.get('/:username/', (req, res, next) => {
     const { username } = req.params;
 
     UserService.read(username)
+        .then(data => {
+            res.json(data);
+        })
+        .catch(err => {
+            next(err);
+        })
+});
+
+// GET - READ ALL PUBLIC USERS
+userRouter.get('/public/', (req, res, next) => {
+
+    UserService.allPublicUsers()
         .then(data => {
             res.json(data);
         })
@@ -62,18 +74,6 @@ userRouter.delete('/:fbase_uid/', (req, res, next) => {
     UserService.delete(fbase_uid)
         .then(data => {
             res.json({ success: `Deleted user id ${fbase_uid}` });
-        })
-        .catch(err => {
-            next(err);
-        })
-});
-
-// GET - READ 
-userRouter.get('/public/', (req, res, next) => {
-
-    UserService.allPublicUsers()
-        .then(data => {
-            res.json(data);
         })
         .catch(err => {
             next(err);
