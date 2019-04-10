@@ -6,7 +6,8 @@
   "scripts": {
     "start:local": "$(npm bin)/nodemon index.js &",
     "start": "node index.js",
-    "test": "$(npm bin)/jest --coverage"
+    "test": "$(npm bin)/jest --coverage && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
+    "write-coveralls": "rm -rf .coveralls.yml && echo \"repo_token:$COVERAGE_TOKEN\" >> .coveralls.yml"
   },
   "repository": {
     "type": "git",
