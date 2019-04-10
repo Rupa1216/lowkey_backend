@@ -26,6 +26,7 @@
     "pg-promise": "^8.6.4"
   },
   "devDependencies": {
+    "coveralls": "^3.0.3",
     "jest": "^24.5.0",
     "nodemon": "^1.18.10"
   }
