@@ -6,6 +6,6 @@ package-lock.json
 
 coverage/*
 
-# .coveralls.yml
+.coveralls.yml
 
 /firebase_key.json
