@@ -19,11 +19,16 @@ CREATE TABLE users (
 
 CREATE TABLE posts (
     id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL,
+    user_id INT,
+    fbase_id VARCHAR NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    content VARCHAR NOT NULL,
+    image_url VARCHAR,
+    text_content VARCHAR,
         FOREIGN KEY (user_id)
         REFERENCES users(id)
+        ON DELETE CASCADE,
+        FOREIGN KEY (fbase_id)
+        REFERENCES users(fbase_uid)
         ON DELETE CASCADE
 );
 
@@ -87,10 +92,10 @@ INSERT INTO users (username, email, fbase_uid, is_private) VALUES
 ('John123', 'john@email.com', 'xyc', 'true'), 
 ('Michelle123', 'michelle@email.com', 'yyx', 'false');
 
-INSERT INTO posts (user_id, content) VALUES
-('2', 'hello world'), 
-('1', 'skghskfhskh'), 
-('1', 'asksdgff');
+INSERT INTO posts (fbase_id, text_content) VALUES
+('yyx', 'hello world'), 
+('xyc', 'skghskfhskh'), 
+('xyc', 'asksdgff');
 
 INSERT INTO attachments (post_id, user_id, urls) VALUES
 ('1', '2', 'www.google.com'),
