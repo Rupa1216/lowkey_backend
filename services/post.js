@@ -1,14 +1,15 @@
 const { db } = require('./dbConnect');
 const PostService = {};
 
-PostService.create = (user_id, content) => {
+PostService.create = (fbase_id, text_content='') => {
     const sql = `
-        INSERT INTO posts (user_id, content) 
-        VALUES ($[user_id], $[content]) 
+        INSERT INTO posts (fbase_id, text_content) 
+        VALUES ($[fbase_id], $[text_content]) 
         RETURNING id;
         `;
-        return db.one(sql, { user_id, content })
+        return db.one(sql, { fbase_id, text_content })
     }
+    // replace user_id with fbase_uid ???
 
 PostService.read = (id) => {
     const sql = `
@@ -24,18 +25,17 @@ PostService.read = (id) => {
     return db.one(sql, {id});
 }
 
-PostService.readAll = (id) => {
+PostService.readAll = (username) => {
     const sql = `
     SELECT 
-    p.created_at, p.content,
-    u.username
+    p.created_at, p.content
     FROM posts p
     LEFT JOIN users u
     ON p.user_id = u.id
     WHERE
-    u.id = $[id]
+    u.username = $[username]
     `;
-    return db.any(sql, {id});
+    return db.any(sql, {username});
 }
 
 PostService.update = (id, content) => {
