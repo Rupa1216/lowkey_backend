@@ -24,7 +24,7 @@ UserService.readId = (fbase_uid) => {
 UserService.read = (username) => {
     const sql = `
     SELECT 
-    u.fbase_uid, u.is_private, u.created_at
+    u.username, u.email, u.is_private, u.created_at
     FROM users u
     WHERE
     u.username = $[username]
@@ -32,15 +32,15 @@ UserService.read = (username) => {
     return db.one(sql, {username});
 }
 
-UserService.update = (fbase_uid, username, bio, display_name, email) => {
+UserService.update = (fbase_uid, username, bio='', display_name='', email, avatar_url='') => {
     const sql = `
     UPDATE users
     SET
-    username=$[username], bio=$[bio], display_name=$[display_name], email=$[email]
+    username=$[username], bio=$[bio], display_name=$[display_name], email=$[email], avatar_url=$[avatar_url]
     WHERE
     fbase_uid=$[fbase_uid]
     `;
-    return db.none(sql, {fbase_uid, username, bio, display_name, email})
+    return db.none(sql, {fbase_uid, username, bio, display_name, email, avatar_url})
 }
 
 UserService.delete = (fbase_uid) => {

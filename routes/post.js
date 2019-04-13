@@ -4,22 +4,35 @@ const PostService = require('../services/post');
 
 // POST - CREATE 
 postRouter.post('/', (req, res, next) => {
-    const {user_id, content} = req.body;
+    const {fbase_id, text_content} = req.body;
 
-    PostService.create(user_id, content)
+    PostService.create(fbase_id, text_content)
     .then(data => {
-        res.json({success: `Created post for user ${user_id} with generated id: ${data.id}`});
+        res.json({success: `Created post for user with firebase_uid: ${fbase_id} with generated id: ${data.id}`});
     })
     .catch(err => {
         next(err);
     })
 });
 
-// GET - READ 
-postRouter.get('/:id/', (req, res, next) => {
+// GET - READ POST BY ID
+postRouter.get('/:id', (req, res, next) => {
     const {id} = req.params;
 
     PostService.read(id)
+    .then(data => {
+        res.json(data);
+    })
+    .catch(err => {
+        next(err);
+    })
+});
+
+// GET - READ ALL POSTS FROM USER
+postRouter.get('/:username/all', (req, res, next) => {
+    const {username} = req.params;
+
+    PostService.readAll(username)
     .then(data => {
         res.json(data);
     })

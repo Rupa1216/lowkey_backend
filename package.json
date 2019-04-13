@@ -6,7 +6,8 @@
   "scripts": {
     "start:local": "$(npm bin)/nodemon index.js &",
     "start": "node index.js",
-    "test": "$(npm bin)/jest --coverage"
+    "test": "$(npm bin)/jest --coverage && cat ./coverage/lcov.info | ./node_modules/.bin/coveralls",
+    "write-coveralls": "rm -rf .coveralls.yml && echo \"repo_token:$COVERAGE_TOKEN\" >> .coveralls.yml"
   },
   "repository": {
     "type": "git",
@@ -26,7 +27,26 @@
     "pg-promise": "^8.6.4"
   },
   "devDependencies": {
+    "coveralls": "^3.0.3",
     "jest": "^24.5.0",
     "nodemon": "^1.18.10"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "clover",
+      "html"
+    ],
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/node_modules/**",
+      "!**/vendor/**",
+      "!**/__fixtures__/**",
+      "!**/coverage/**",
+      "!index.js"
+    ]
   }
 }

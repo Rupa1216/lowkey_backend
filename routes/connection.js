@@ -15,8 +15,8 @@ connectionRouter.post('/', (req, res, next) => {
     })
 });
 
-// GET - READ
-connectionRouter.get('/:id/', (req, res, next) => {
+// GET - READ BY ID
+connectionRouter.get('/:id', (req, res, next) => {
     const {id} = req.params;
 
     ConnectionService.read(id)
@@ -28,6 +28,19 @@ connectionRouter.get('/:id/', (req, res, next) => {
     })
 });
 
+// GET - READ ALL FRIENDS
+connectionRouter.get('/:id/all', (req, res, next) => {
+    const {id} = req.params;
+
+    ConnectionService.readAll(id)
+    .then(data => {
+        res.json(data);
+    })
+    .catch(err => {
+        next(err);
+    })
+}); 
+
 // PUT - UPDATE
 connectionRouter.put('/:id', (req, res, next) => {
     const { id } = req.params;
@@ -35,11 +48,9 @@ connectionRouter.put('/:id', (req, res, next) => {
 
 ConnectionService.update(id, status)
     .then(data => {
-        console.log('working?')
     res.json({success: `Updated connection #${id} to status: ${status}`});
     })
     .catch(err => {
-        console.log('failing?')
     next(err);
     })
 });

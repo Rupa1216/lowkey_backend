@@ -16,7 +16,7 @@ attachmentRouter.post('/', (req, res, next) => {
 });
 
 // GET - READ
-attachmentRouter.get('/:id/', (req, res, next) => {
+attachmentRouter.get('/:id', (req, res, next) => {
     const {id} = req.params;
 
     AttachmentService.read(id)
