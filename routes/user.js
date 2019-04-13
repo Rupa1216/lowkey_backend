@@ -17,7 +17,7 @@ userRouter.post('/', (req, res, next) => {
 });
 
 // GET - READ BY FBASE_ID
-userRouter.get('/id/:fbase_uid/', (req, res, next) => {
+userRouter.get('/id/:fbase_uid', (req, res, next) => {
     const { fbase_uid } = req.params;
 
     UserService.readId(fbase_uid)
@@ -30,7 +30,7 @@ userRouter.get('/id/:fbase_uid/', (req, res, next) => {
 });
 
 // GET - READ BY USERNAME
-userRouter.get('/:username/', (req, res, next) => {
+userRouter.get('/:username', (req, res, next) => {
     const { username } = req.params;
 
     UserService.read(username)
@@ -43,7 +43,7 @@ userRouter.get('/:username/', (req, res, next) => {
 });
 
 // GET - READ ALL PUBLIC USERS
-userRouter.get('/public/', (req, res, next) => {
+userRouter.get('/public', (req, res, next) => {
 
     UserService.allPublicUsers()
         .then(data => {
@@ -55,10 +55,10 @@ userRouter.get('/public/', (req, res, next) => {
 });
 
 // PUT - UPDATE EMAIL
-userRouter.put('/:fbase_uid/', (req, res, next) => {
+userRouter.put('/:fbase_uid', (req, res, next) => {
     const { fbase_uid } = req.params;
-    let { username, bio, display_name, email } = req.body;
-    UserService.update(username, bio = '', display_name = '', email)
+    let { username, bio, display_name, email, avatar_url } = req.body;
+    UserService.update(username, bio = '', display_name = '', email, avatar_url='')
         .then(data => {
             res.json({ success: `Updated user ${username} with email: ${email}` });
         })
@@ -68,7 +68,7 @@ userRouter.put('/:fbase_uid/', (req, res, next) => {
 });
 
 // DELETE - DELETE
-userRouter.delete('/:fbase_uid/', (req, res, next) => {
+userRouter.delete('/:fbase_uid', (req, res, next) => {
     const { fbase_uid } = req.params;
 
     UserService.delete(fbase_uid)
